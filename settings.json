@@ -1,0 +1,17 @@
+{
+        "maxPeers": 32,
+        "minOutboundPeers": 20,
+        "minBlockchainPeers": 8,
+        "maxNetworkThreadPoolSize": 45,
+        "apiDocumentationEnabled": true,
+        "uiPort": 12388,
+        "apiWhitelist": [
+                "0.0.0.0/0",
+                "::/0",
+                "::1",
+                "127.0.0.1",
+                "95.70.154.6"
+        ],
+        "apiRestricted": false,
+        "bindAddress":"0.0.0.0"
+}
