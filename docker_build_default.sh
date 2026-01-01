@@ -1,1 +1,0 @@
-docker build -t structi/qortal:4.3.0_bootstrap_2023-09-15 .

@@ -1,1 +1,0 @@
-docker build --platform=linux/amd64 -t structi/qortal:4.3.0_bootstrap_2023-09-15-amd64 .
