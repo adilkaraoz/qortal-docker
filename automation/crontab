@@ -1,0 +1,5 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Weekly build & push (Sundays at 00:00)
+0 0 * * 0 /usr/local/bin/run-build >> /var/log/cron.log 2>&1

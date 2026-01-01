@@ -1,16 +1,16 @@
-FROM eclipse-temurin:17.0.3_7-jre
+FROM alpine:3.19
 
-RUN apt update
-RUN apt -y upgrade
-RUN apt install -y unzip
-RUN apt install -y wget
-RUN apt install -y p7zip-full
-RUN wget https://github.com/Qortal/qortal/releases/latest/download/qortal.zip && unzip qortal.zip && cd qortal && chmod +x *.sh
-RUN cd qortal && wget http://bootstrap.qortal.org/bootstrap-archive.7z
-RUN cd qortal && 7za x bootstrap-archive.7z
-RUN cd qortal && mkdir db && mv bootstrap/* db/.
-RUN rm qortal.zip && rm qortal/bootstrap-archive.7z
-COPY startup.sh .
-RUN chmod +x startup.sh
-COPY settings.json qortal/
-CMD ["/bin/bash","-c","./startup.sh"]
+RUN apk add --no-cache bash curl ca-certificates docker-cli tzdata
+
+WORKDIR /opt
+COPY qortal /opt/qortal
+COPY automation/run-build.sh /usr/local/bin/run-build
+COPY automation/crontab /etc/crontabs/root
+
+RUN chmod +x /usr/local/bin/run-build && mkdir -p /var/log && chmod 644 /etc/crontabs/root
+
+# Default Docker socket for talking to host/sidecar daemon.
+ENV DOCKER_HOST=unix:///var/run/docker.sock
+
+# BusyBox crond in foreground, verbose logging
+CMD ["crond", "-f", "-l", "8", "-c", "/etc/crontabs"]
